@@ -1,0 +1,72 @@
+<%= form_with(model: user) do |form| %>
+  <% if user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div data-controller="toggle-fields">
+    <div class="mb-3">
+      <%= form.label :age, class: 'form-label' %>
+      <%= form.number_field :age, "data-toggle-fields-target": :input, class: 'form-control' %>
+    </div>
+
+    <div data-toggle-fields-target="hidden" data-greater-than=16 class="mb-3 form-check">
+      <%= form.label :driver_license, class: 'form-check-label' %>
+      <%= form.check_box :driver_license, class: 'form-check-input' %>
+    </div>
+  </div>
+
+  <div data-controller="toggle-fields">
+    <div class="mb-3 form-check">
+      <%= form.label :extend_profile, class: 'form-check-label' %>
+      <%= form.check_box :extend_profile, "data-toggle-fields-target": :input, class: 'form-check-input' %>
+    </div>
+
+    <div data-toggle-fields-target="hidden" data-value=true class="mb-3">
+      <%= form.label :twitter, class: 'form-label' %>
+      <%= form.text_field :twitter, class: 'form-control' %>
+    </div>
+
+    <div data-toggle-fields-target="hidden" data-value=true class="mb-3">
+      <%= form.label :linkedin, class: 'form-label' %>
+      <%= form.text_field :linkedin, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div data-controller="toggle-fields">
+    <div class="mb-3">
+      <%= form.label :perferred_method_of_contact, class: 'form-label' %>
+      <%= form.select :perferred_method_of_contact,
+        User.perferred_method_of_contacts.keys,
+        { include_blank: true },
+        "data-toggle-fields-target": :input,
+        class: 'form-control' %>
+    </div>
+
+    <div data-toggle-fields-target="hidden" data-value="email" class="mb-3">
+      <%= form.label :email, class: 'form-label' %>
+      <%= form.text_field :email, class: 'form-control' %>
+    </div>
+
+    <div data-toggle-fields-target="hidden" data-value="phone" class="mb-3">
+      <%= form.label :phone, class: 'form-label' %>
+      <%= form.text_field :phone, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
